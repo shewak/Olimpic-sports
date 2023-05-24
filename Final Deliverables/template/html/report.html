@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <canvas id="region"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="age"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        new Chart(document.getElementById("region"),{
+            type : 'bar',
+            data : {
+                labels : ["Male","Female"],
+                datasets : [{
+                    label : "north west",
+                    data : [4801.585,4688.345],
+                    backgroundColor : "rgb(104, 143, 228)",
+                    borderWidth: 1
+                },{
+                    label : "north east",
+                    data : [4721.215,4731],
+                    backgroundColor : "rgb(81, 221, 38)",
+                    borderWidth: 1
+                },{
+                    label : "south east",
+                    data : [5717.47,6424.11],
+                    backgroundColor : "rgb(242, 245, 55)",
+                    borderWidth: 1
+                },{
+                    label : "south west",
+                    data : [4869.8,5074.1],
+                    backgroundColor : "rgb(231, 154, 67)",
+                    borderWidth: 1
+                }]
+            },
+            options : {
+                plugins: {
+                    title : {
+                        display : true,
+                        text : "region"
+                    }
+                },
+                scales : {
+                    x: {
+                        stacked : true,
+                        title : {
+                            display : true,
+                            text : "sex"
+                        }
+                    },
+                    y: {
+                        ticks : {
+                            max : 22000,
+                            stepSize : 2000
+                        },
+                        title : {
+                            display : true,
+                            text : "bmi"
+                        },
+                        beginAtZero : true,
+                        stacked : true
+                    }
+                },
+            },
+            plugins : [ChartDataLabels]
+        })
+
+        new Chart(document.getElementById("age"),{
+            type : 'bar',
+            data : {
+                labels : ['north west','north east','south east','south west'],
+                datasets : [{
+                    label : 'Average age',
+                    data : [39.20,39.27,38.94,39.46],
+                    backgroundColor : ['rgb(145, 93, 33)','rgb(148, 47, 47)','rgb(207, 132, 62)','rgb(148, 47, 47)']
+                }]
+            },
+            options : {
+                plugins : {
+                    legend : { display : false},
+                    title : {
+                        display : true,
+                        text : 'Average age based on region'
+                    }
+                }
+        }})
+    </script>
+</body>
+</html>

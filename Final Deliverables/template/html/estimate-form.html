@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EStimator</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="bootstrap/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <div class="bg-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <div id="margin" class="card mt-4">
+                        <div class="card-body">
+                            <p id="cost" class="h3 text-center"></p>
+                            <form action="/get-cost" method="post">
+                                <div class="loader"></div>
+                                <div class="loading-overlay"><p id="loading" class="h5">Please Wait...</p></div>
+                                <div class="mb-3">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="number" name="age" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="gen" class="form-label form-check-inline d-flex">Gender</label>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="gender" id="male" value="0" class="form-check-input" required>
+                                        <label for="male" class="form-check-label">Male</label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <input type="radio" name="gender" value="1" id="female" class="form-check-input" required>
+                                        <label for="female" class="form-check-label">Female</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bmi" class="form-label">BMI</label>
+                                    <input type="number" name="bmi" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="child" class="form-label">No. of children</label>
+                                    <input type="number" name="child" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="smoker" class="form-label form-check-inline d-flex">Smoker</label>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" name="smoker" value="0" required>
+                                        <label for="" class="form-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" name="smoker" value="1" required>
+                                        <label for="" class="form-label">No</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="region" class="form-label">Region</label>
+                                    <select name="region" id="" class="form-control">
+                                        <option value="0">south east</option>
+                                        <option value="1">south west</option>
+                                        <option value="2">north east</option>
+                                        <option value="3">north west</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid pb-3">
+                                    <p id="test"></p>
+                                    <button type="button" id="final" class="btn btn-primary" onclick="getcost()">Estimate</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        function getcost(){
+            var fdata = $("form").serialize();
+            $("#final").attr("disabled",true);
+            $(".loader").css("display","block")
+            $(".loading-overlay").css("display","block")
+            $("#loading").css("display","block")
+            $.ajax({
+                url : "/get-cost",
+                method : "POST",
+                data : fdata,
+                success : function(res){
+                    $("form").hide();
+                    $(".loader").fadeOut("slow")
+                    $(".loading-overlay").fadeOut("slow")
+                    $("#loading").fadeOut("slow")
+                    $("#margin").addClass("mt-5")
+                    $("#cost").html(res);
+                }
+                
+            })
+        }
+    </script>
+</body>
+</html>
